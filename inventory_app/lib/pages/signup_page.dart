@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _signIn() {
+  void _signUp() {
     if (_formKey.currentState!.validate()) {
       // You can later replace this with actual authentication logic
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/signin');
     }
-  }
-
-  void _create() {
-    Navigator.pushReplacementNamed(context, '/signup');
   }
 
   @override
@@ -43,7 +39,7 @@ class _SignInPageState extends State<SignInPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Sign In",
+                      "Sign Up",
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium
@@ -75,31 +71,13 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: _signIn,
+                      onPressed: _signUp,
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(48),
                         backgroundColor: Colors.redAccent,
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text("Sign In"),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      "Don’t have an account? Create one below:",
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey[700],
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: _create,
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(48),
-                        backgroundColor: Colors.redAccent,
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text("Create Account"),
+                      child: const Text("Sign Up"),
                     ),
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/signup_page.dart';
 import 'pages/signin_page.dart';
 import 'pages/home_page.dart';
 import 'pages/check_stock_page.dart';
@@ -23,6 +24,7 @@ class InventoryApp extends StatelessWidget {
       initialRoute: '/signin',
       routes: {
         '/signin': (context) => const SignInPage(),
+        '/signup': (context) => const SignUpPage(),
         '/home': (context) => const HomePage(),
         '/check-stock': (context) => const CheckStockPage(),
         '/update-stock': (context) => const UpdateStockPage(),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart';
+
+final pb = PocketBase('http://127.0.0.1:8090'); 
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -11,14 +14,45 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isLoading = false;
+  String? _error;
 
-  void _signIn() {
-    if (_formKey.currentState!.validate()) {
-      // You can later replace this with actual authentication logic
+  // Sign In Logic
+  Future<void> _signIn() async {
+  if (!_formKey.currentState!.validate()) return;
+
+  setState(() {
+    _isLoading = true;
+    _error = null;
+  });
+
+  try {
+    final authData = await pb.collection('users').authWithPassword(
+      _emailController.text.trim(),
+      _passwordController.text.trim(),
+    );
+
+    // If login success → go to home
+    if (authData.record != null) {
       Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      setState(() {
+        _error = "Authentication failed. Please try again.";
+      });
     }
+  } catch (e) {
+    setState(() {
+      _error = "Invalid credentials or network issue.";
+    });
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
   }
+}
 
+
+  // Navigate to Sign Up
   void _create() {
     Navigator.pushReplacementNamed(context, '/signup');
   }
@@ -50,6 +84,8 @@ class _SignInPageState extends State<SignInPage> {
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 24),
+
+                    // Email
                     TextFormField(
                       controller: _emailController,
                       decoration: const InputDecoration(
@@ -57,10 +93,13 @@ class _SignInPageState extends State<SignInPage> {
                         prefixIcon: Icon(Icons.email),
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) =>
-                          value == null || value.isEmpty ? 'Enter your email' : null,
+                      validator: (value) => value == null || value.isEmpty
+                          ? 'Enter your email'
+                          : null,
                     ),
                     const SizedBox(height: 16),
+
+                    // Password
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
@@ -73,17 +112,41 @@ class _SignInPageState extends State<SignInPage> {
                           ? 'Enter your password'
                           : null,
                     ),
+
                     const SizedBox(height: 24),
+
+                    // Error message
+                    if (_error != null)
+                      Text(
+                        _error!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+
+                    const SizedBox(height: 16),
+
+                    // Sign In button with loading spinner
                     ElevatedButton(
-                      onPressed: _signIn,
+                      onPressed: _isLoading ? null : _signIn,
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(48),
                         backgroundColor: Colors.redAccent,
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text("Sign In"),
+                      child: _isLoading
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : const Text("Sign In"),
                     ),
+
                     const SizedBox(height: 16),
+
+                    // Create Account prompt
                     Text(
                       "Don’t have an account? Create one below:",
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -92,8 +155,10 @@ class _SignInPageState extends State<SignInPage> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
+
+                    // Create Account button
                     ElevatedButton(
-                      onPressed: _create,
+                      onPressed: _isLoading ? null : _create,
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(48),
                         backgroundColor: Colors.redAccent,

@@ -12,17 +12,6 @@ class HomePage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black,
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/signin');
-            },
-            child: const Text(
-              'Sign Out',
-              style: TextStyle(color: Colors.white),
-            ),
-          )
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

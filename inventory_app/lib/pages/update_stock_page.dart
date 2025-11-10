@@ -57,21 +57,19 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
     try {
       if (_editingItem == null) {
         // Create new item
-        await pb.collection('inventory').create(body: {
-          "item_name": name,
-          "quantity": quantity,
-          "unit": unit,
-        });
+        await pb
+            .collection('inventory')
+            .create(
+              body: {"item_name": name, "quantity": quantity, "unit": unit},
+            );
       } else {
         // Update existing item
-        await pb.collection('inventory').update(
-          _editingItem!.id,
-          body: {
-            "item_name": name,
-            "quantity": quantity,
-            "unit": unit,
-          },
-        );
+        await pb
+            .collection('inventory')
+            .update(
+              _editingItem!.id,
+              body: {"item_name": name, "quantity": quantity, "unit": unit},
+            );
         _editingItem = null; // reset
       }
 
@@ -80,9 +78,9 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
       _unitController.clear();
       await _loadStock();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to save stock.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Failed to save stock.")));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -95,9 +93,9 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
       await pb.collection('inventory').delete(item.id);
       await _loadStock();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Failed to delete stock.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Failed to delete stock.")));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -115,7 +113,10 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Stock', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Update Stock',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -145,9 +146,12 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
                   ElevatedButton(
                     onPressed: _saveStock,
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(48),
-                        backgroundColor: Colors.redAccent),
-                    child: Text(_editingItem == null ? "Add Stock" : "Update Stock"),
+                      minimumSize: const Size.fromHeight(48),
+                      backgroundColor: Colors.redAccent,
+                    ),
+                    child: Text(
+                      _editingItem == null ? "Add Stock" : "Update Stock",
+                    ),
                   ),
                   const SizedBox(height: 24),
 
@@ -161,16 +165,23 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
                           child: ListTile(
                             title: Text("${item.data['item_name']}"),
                             subtitle: Text(
-                                "Qty: ${item.data['quantity']} ${item.data['unit']}"),
+                              "Qty: ${item.data['quantity']} ${item.data['unit']}",
+                            ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.edit, color: Colors.blue),
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.blue,
+                                  ),
                                   onPressed: () => _editStock(item),
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.delete, color: Colors.red),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
                                   onPressed: () => _deleteStock(item),
                                 ),
                               ],

@@ -12,7 +12,6 @@ class UpdateStockPage extends StatefulWidget {
 class _UpdateStockPageState extends State<UpdateStockPage> {
   List<RecordModel> _stockItems = [];
   bool _isLoading = false;
-  String? _error;
 
   final _nameController = TextEditingController();
   final _quantityController = TextEditingController();
@@ -33,7 +32,9 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
       final records = await pb.collection('inventory').getFullList();
       setState(() => _stockItems = records);
     } catch (e) {
-      setState(() => _error = "Failed to load stock.");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Failed to load stock.")));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -70,7 +71,9 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
               _editingItem!.id,
               body: {"item_name": name, "quantity": quantity, "unit": unit},
             );
-        _editingItem = null; // reset
+        setState(() {
+          _editingItem = null; // reset
+        });
       }
 
       _nameController.clear();
@@ -103,10 +106,12 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
 
   // Fill form for editing
   void _editStock(RecordModel item) {
-    _nameController.text = item.data['item_name'];
-    _quantityController.text = item.data['quantity'].toString();
-    _unitController.text = item.data['unit'];
-    _editingItem = item;
+    setState(() {
+      _nameController.text = (item.data['item_name'] ?? '').toString();
+      _quantityController.text = (item.data['quantity'] ?? 0).toString();
+      _unitController.text = (item.data['unit'] ?? '').toString();
+      _editingItem = item;
+    });
   }
 
   @override
@@ -151,6 +156,7 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
                     ),
                     child: Text(
                       _editingItem == null ? "Add Stock" : "Update Stock",
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                   const SizedBox(height: 24),

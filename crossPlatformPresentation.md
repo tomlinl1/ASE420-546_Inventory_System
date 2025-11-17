@@ -12,7 +12,7 @@ title: Sprint 1 Retrospective
 ---
 **Individual Project Metrics**
 
-- Total individual Lines of Code (LoC): __1,039__
+- Total individual Lines of Code (LoC): __1,175__
 - Number of individual features completed: __6/6__
 - Number of individual requirements completed: __11/11__
 - Individual burndown rate (%): __100%__

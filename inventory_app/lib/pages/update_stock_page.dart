@@ -63,6 +63,14 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
             .create(
               body: {"item_name": name, "quantity": quantity, "unit": unit},
             );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Successfully added $name to inventory!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
       } else {
         // Update existing item
         await pb
@@ -74,6 +82,14 @@ class _UpdateStockPageState extends State<UpdateStockPage> {
         setState(() {
           _editingItem = null; // reset
         });
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Successfully updated $name!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
       }
 
       _nameController.clear();

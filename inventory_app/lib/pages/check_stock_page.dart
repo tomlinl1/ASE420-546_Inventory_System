@@ -96,6 +96,7 @@ class _CheckStockPageState extends State<CheckStockPage> {
           content: Text(
             '${item.data['item_name']} quantity ${delta > 0 ? 'increased' : 'decreased'} to $newQty',
           ),
+          backgroundColor: Colors.green,
         ),
       );
     } catch (e) {

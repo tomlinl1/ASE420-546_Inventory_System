@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../main.dart';
 import '../utils/stock_utils.dart';
 
@@ -43,6 +44,17 @@ class _HomePageState extends State<HomePage> {
       setState(() => _error = "Failed to load stock.");
     } finally {
       setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _launchWebsite() async {
+    final Uri url = Uri.parse('https://www.antonios-pizzapub.com');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not launch website')),
+        );
+      }
     }
   }
 
@@ -135,7 +147,9 @@ class _HomePageState extends State<HomePage> {
                             icon: const Icon(Icons.inventory),
                             label: const Text("Check Stock"),
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(160, 48),
+                              minimumSize: const Size(140, 48),
+                              backgroundColor: Colors.red.shade700,
+                              foregroundColor: Colors.white,
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -151,7 +165,20 @@ class _HomePageState extends State<HomePage> {
                             icon: const Icon(Icons.update),
                             label: const Text("Update Stock"),
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(160, 48),
+                              minimumSize: const Size(140, 48),
+                              backgroundColor: Colors.red.shade700,
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          ElevatedButton.icon(
+                            onPressed: _launchWebsite,
+                            icon: const Icon(Icons.language),
+                            label: const Text("Website"),
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(140, 48),
+                              backgroundColor: Colors.red.shade700,
+                              foregroundColor: Colors.white,
                             ),
                           ),
                         ],

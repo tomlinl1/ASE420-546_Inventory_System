@@ -1,0 +1,17 @@
+# Hugo
+/public/
+/resources/_gen/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+

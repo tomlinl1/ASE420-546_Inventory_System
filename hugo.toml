@@ -1,0 +1,43 @@
+baseURL = 'https://example.com/'
+languageCode = 'en-us'
+title = "Antonio's Pizza Pub Inventory System"
+theme = 'inventory-theme'
+
+[params]
+  description = "A Flutter-based inventory management system for tracking restaurant inventory with real-time updates, low stock alerts, and remote access capabilities."
+  version = "1.0.0"
+  github_url = "https://github.com/yourusername/inventory-system"
+  brand_color = "#d32f2f"
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 10
+  [[menu.main]]
+    identifier = "getting-started"
+    name = "Getting Started"
+    url = "/getting-started/"
+    weight = 20
+  [[menu.main]]
+    identifier = "setup"
+    name = "Setup"
+    url = "/setup/"
+    weight = 30
+  [[menu.main]]
+    identifier = "usage"
+    name = "Usage"
+    url = "/usage/"
+    weight = 40
+  [[menu.main]]
+    identifier = "features"
+    name = "Features"
+    url = "/features/"
+    weight = 50
+  [[menu.main]]
+    identifier = "troubleshooting"
+    name = "Troubleshooting"
+    url = "/troubleshooting/"
+    weight = 60
+

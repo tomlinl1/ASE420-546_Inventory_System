@@ -81,5 +81,5 @@ title: Sprint 1 Retrospective
 
 ### Key Individual Dates:
 
-- Individual presentation: 11/12/25
+- Individual presentation: 11/17/25
 - Individual milestones: By Week 3 - App should be fully functional and all features implemented.

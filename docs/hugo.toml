@@ -2,6 +2,8 @@ baseURL = 'https://example.com/'
 languageCode = 'en-us'
 title = "Antonio's Pizza Pub Inventory System"
 theme = 'inventory-theme'
+contentDir = 'content'
+themesDir = 'themes'
 
 [params]
   description = "A Flutter-based inventory management system for tracking restaurant inventory with real-time updates, low stock alerts, and remote access capabilities."

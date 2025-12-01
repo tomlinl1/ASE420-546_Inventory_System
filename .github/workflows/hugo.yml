@@ -37,7 +37,7 @@ jobs:
           REPO_NAME="${GITHUB_REPOSITORY##*/}"
           BASE_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}/"
           echo "Building with baseURL: ${BASE_URL}"
-          hugo --minify --baseURL "${BASE_URL}"
+          hugo --minify --baseURL "${BASE_URL}" --config docs/hugo.toml --config docs/hugo.toml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

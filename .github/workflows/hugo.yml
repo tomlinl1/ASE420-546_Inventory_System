@@ -30,8 +30,14 @@ jobs:
           extended: true
 
       - name: Build
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          hugo --minify --baseURL "${{ format('https://%s.github.io/%s/', github.repository_owner, github.event.repository.name) }}"
+          REPO_OWNER="${GITHUB_REPOSITORY%%/*}"
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
+          BASE_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}/"
+          echo "Building with baseURL: ${BASE_URL}"
+          hugo --minify --baseURL "${BASE_URL}"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
